@@ -1,0 +1,16 @@
+MINI PROJECT NOTES
+
+Project Title: Expense Tracker for Students
+Modules:
+1) Login & Signup
+2) Add Expenses
+3) Split Expenses
+4) Balance Calculation
+5) Monthly Summary
+
+Technology:
+Frontend: HTML, CSS, JavaScript
+Backend: Python Flask
+Database: MySQL
+
+Status: Under Development

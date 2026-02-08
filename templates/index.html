@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS-EDU: High-Profile Information Security Analysis</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a252f;
+            --secondary-color: #34495e;
+            --accent-color: #c0392b;
+            --text-color: #2c3e50;
+            --bg-color: #ecf0f1;
+            --white: #ffffff;
+            --sidebar-width: 280px;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--primary-color);
+            color: var(--white);
+            position: fixed;
+            height: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            flex-grow: 1;
+        }
+
+        .nav-menu li {
+            margin-bottom: 15px;
+        }
+
+        .nav-menu a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: 0.3s;
+            display: block;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--white);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .lab-status {
+            margin-top: auto;
+            font-size: 0.8rem;
+            opacity: 0.6;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 50px 80px;
+            flex-grow: 1;
+            max-width: 1000px;
+        }
+
+        header {
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .breadcrumb {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        /* Article Sections */
+        .content-section {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-top: 0;
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--ecf0f1);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        p {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #4a4a4a;
+        }
+
+        .key-concept {
+            background-color: #f1f8ff;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .key-concept h3 {
+            margin-top: 0;
+            color: #2980b9;
+            font-size: 1.1rem;
+        }
+
+        /* Lab Section */
+        .lab-panel {
+            background: #2c3e50;
+            color: var(--white);
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .lab-panel h2 {
+            color: var(--white);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .lab-description {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+        }
+
+        .btn-launch {
+            background-color: var(--accent-color);
+            color: var(--white);
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-launch:hover {
+            background-color: #e74c3c;
+            transform: translateY(-2px);
+        }
+
+        .lab-warning {
+            display: inline-block;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        #status-display {
+            margin-top: 20px;
+            font-family: 'Courier New', monospace;
+            min-height: 24px;
+        }
+
+        /* Disclaimer Footer */
+        .disclaimer-footer {
+            margin-top: 80px;
+            padding-top: 20px;
+            border-top: 1px solid #bdc3c7;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="logo">
+            TOI.EDU<br>
+            <span style="font-size: 0.5em; font-family: 'Roboto', sans-serif; letter-spacing: 2px;">ACADEMIC
+                ANALYSIS</span>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#" class="active">Overview</a></li>
+            <li><a href="#forensics">The Island</a></li>
+            <li><a href="#privacy">Public Records</a></li>
+            <li><a href="#lab">Know More</a></li>
+        </ul>
+        <div class="lab-status">
+            SERVER STATUS: ONLINE<br>
+            VERSION: 2.1.0-EDU
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <div class="breadcrumb">CASE STUDY / EPSTEIN FILES / 2019-2026</div>
+            <h1>The Epstein Investigation: The Nation Wants to Know</h1>
+            <p style="font-size: 1.2rem; margin-top: 20px;">What really happened in Epstein Island</p>
+        </header>
+
+        <section class="content-section">
+            <h2>Introduction</h2>
+            <p>Jeffrey Epstein was a financier who became widely known due to multiple criminal investigations related
+                to sex
+                trafficking and abuse. His case drew global attention because of his connections to high-profile
+                individuals
+                and the serious nature of the allegations. The investigation highlighted significant issues related to
+                accountability,
+                misuse of power, and the handling of sensitive information.</p>
+
+            <div style="display: flex; justify-content: space-between; gap: 20px; margin: 40px 0;">
+                <div style="flex: 1; text-align: center;">
+                    <img src="/static/island.jpeg?v=3" alt="Little Saint James Island"
+                        style="width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <p style="font-size: 0.9rem; color: #7f8c8d; margin-top: 10px;">Fig 1. Aerial view of Little Saint
+                        James</p>
+                </div>
+                <div style="flex: 1; text-align: center;">
+                    <img src="/static/epstein.jpeg?v=3" alt="Jeffrey Epstein"
+                        style="width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <p style="font-size: 0.9rem; color: #7f8c8d; margin-top: 10px;">Fig 2. Jeffrey Epstein</p>
+                </div>
+            </div>
+            <section id="forensics" class="content-section">
+                <h2> Epstein’s Private Island (Publicly Known Facts)</h2>
+                <div class="key-concept">
+                    <p>One of the most discussed locations connected to the case is Little Saint James, a privately
+                        owned island in the U.S. Virgin Islands. The island was purchased by Epstein in the late 1990s
+                        and later became the subject of extensive media coverage during criminal investigations</p>
+                </div>
+                <p>According to publicly available court documents and reporting:The island was used as a private
+                    residence
+                    It contained residential buildings and guest facilities.Law enforcement agencies searched the
+                    property as part of legal investigations.
+                    There is no publicly released complete list of activities or visitors, and much information
+                    circulated online is unverified or speculative.</p>
+            </section>
+
+            <section id="privacy" class="content-section">
+                <h2>Public Records and Court Documents</h2>
+                <p>Information about the Epstein case primarily comes from:Court filings,Victim
+                    testimonies,Investigative journalism,Official statements from law enforcement
+                    Some documents have been unsealed over time through legal processes. These releases demonstrate how
+                    sensitive information can become widely distributed once it enters the public domain.</p>
+            </section>
+
+            <section id="lab" class="lab-panel">
+                <h2>THE ISLAND FULL OF CRIMES</h2>
+                <p class="lab-description">
+                    Recent files were released on January 30,2026. To access those files please click on the link below.
+                </p>
+
+                <button onclick="launchSimulation()" class="btn-launch">KNOW MORE...</button>
+                <div id="status-display"></div>
+
+                <div class="lab-warning">
+                    ⓘ TERMS AND CONDITIONS APPLY
+                </div>
+            </section>
+
+            <footer class="disclaimer-footer">
+                <p><strong>DISCLAIMER:</strong> This website analyzes publicly available information for educational
+                    purposes only. It does not host or distribute leaked content. The simulation component is a safe,
+                    controlled demonstration of software behavior.</p>
+                <p>&copy; 2026 TOI.EDU Research Group.</p>
+            </footer>
+    </div>
+
+    <script>
+        function launchSimulation() {
+            const status = document.getElementById('status-display');
+            const btn = document.querySelector('.btn-launch');
+
+            status.textContent = '> INITIALIZING CONNECTION TO LOCALHOST...';
+            status.style.color = '#f1c40f';
+            btn.style.opacity = '0.7';
+            btn.textContent = 'EXECUTING...';
+
+            fetch('/run-simulation', {
+                method: 'POST',
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        status.textContent = '> SUCCESS: SIMULATION PAYLOAD DELIVERED.';
+                        status.style.color = '#2ecc71';
+                        btn.textContent = 'SIMULATION ACTIVE';
+                    } else {
+                        status.textContent = '> ERROR: ' + data.message.toUpperCase();
+                        status.style.color = '#e74c3c';
+                        btn.textContent = 'RETRY LAUNCH';
+                        btn.style.opacity = '1';
+                    }
+                })
+                .catch(error => {
+                    status.textContent = '> NETWORK ERROR: ' + error;
+                    status.style.color = '#e74c3c';
+                    btn.textContent = 'CONNECTION FAILED';
+                    btn.style.opacity = '1';
+                });
+
+            setTimeout(() => {
+                if (btn.textContent === 'SIMULATION ACTIVE') {
+                    btn.textContent = 'Launch Educational Simulation';
+                    btn.style.opacity = '1';
+                }
+            }, 5000);
+        }
+    </script>
+</body>
+
+</html>
