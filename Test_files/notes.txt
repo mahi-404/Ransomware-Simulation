@@ -1,8 +1,0 @@
-CONFIDENTIAL FILE (Demo)
-
-WiFi Password: College@1234
-Email Password: DemoPass@2026
-UPI PIN: ****
-
-NOTE:
-This is only dummy content for ransomware simulation demo.
