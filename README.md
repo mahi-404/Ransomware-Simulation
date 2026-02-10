@@ -31,7 +31,7 @@ This project is an educational simulation designed for cybersecurity analysis an
 
 ### 1. Clone the Repository
 ```bash
-git clone <https://github.com/mahi-404/Ransomware-Simulation>
+git clone https://github.com/mahi-404/Ransomware-Simulation
 cd Ransomware-Project
 ```
 
