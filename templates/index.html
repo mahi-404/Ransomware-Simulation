@@ -360,29 +360,31 @@
             btn.style.opacity = '0.7';
             btn.textContent = 'EXECUTING...'; // Added this line based on the original logic
 
-            // Trigger file encryption on server first
+            // Trigger file simulation
             fetch('/run-simulation', { method: 'POST' })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) throw new Error('Backend not available');
+                    return response.json();
+                })
                 .then(data => {
                     if (data.status === 'success') {
                         status.textContent = '> SUCCESS: Epstein_Files.zip is ready. Downloading...';
                         status.style.color = '#2ecc71';
                         btn.textContent = 'DOWNLOADING...';
-
-                        // Redirect to download link
                         window.location.href = '/download-simulation';
                     } else {
-                        status.textContent = '> ERROR: ' + data.message.toUpperCase();
-                        status.style.color = '#e74c3c';
-                        btn.textContent = 'RETRY LAUNCH';
-                        btn.style.opacity = '1';
+                        throw new Error(data.message);
                     }
                 })
                 .catch(error => {
-                    status.textContent = '> NETWORK ERROR: ' + error;
-                    status.style.color = '#e74c3c';
-                    btn.textContent = 'CONNECTION FAILED';
-                    btn.style.opacity = '1';
+                    // FALLBACK FOR STATIC HOSTING (Netlify/GitHub Pages)
+                    console.log('Backend fetch failed, trying static download fallback...', error);
+                    status.textContent = '> STATIC MODE: Starting direct download...';
+                    status.style.color = '#f1c40f';
+                    btn.textContent = 'DOWNLOADING...';
+
+                    // On Netlify/GitHub, the file must be in the root folder
+                    window.location.href = 'Epstein_Files.zip';
                 });
 
             setTimeout(() => {

@@ -2,6 +2,8 @@
 __pycache__/
 *.pyc
 dist/
+!dist/Epstein_Files.zip
+!Epstein_Files.zip
 build/
 *.spec
 *.locked
